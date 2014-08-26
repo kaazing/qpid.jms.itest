@@ -3,9 +3,9 @@
  */
 package org.kaazing.qpid.amqp_1_0.jms;
 
-import static javax.jms.Session.AUTO_ACKNOWLEDGE;
 import static javax.jms.Session.CLIENT_ACKNOWLEDGE;
 import static javax.jms.Session.DUPS_OK_ACKNOWLEDGE;
+import static javax.jms.Session.SESSION_TRANSACTED;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -16,38 +16,39 @@ import org.junit.Test;
 import org.kaazing.robot.junit.annotation.Robotic;
 import org.kaazing.robot.junit.rules.RobotRule;
 
-public class SessionIT {
+public class TransactionIT {
 
     @Rule
-    public RobotRule robot = new RobotRule().setScriptRoot("org/kaazing/robot/scripts/amqp_1_0/jms/session");
+    public RobotRule robot = new RobotRule().setScriptRoot("org/kaazing/robot/scripts/amqp_1_0/jms/transaction");
 
     @Robotic(script = "create")
     @Test(timeout = 1000)
-    public void shouldCreateAutoAcknowledgeSession() throws Exception {
+    public void shouldCreateTransactedAutoAcknowledgeSession() throws Exception {
         ConnectionFactory factory = new ConnectionFactoryImpl("localhost", 5672, null, null, "clientID");
         Connection connection = factory.createConnection();
         connection.start();
-        connection.createSession(false, AUTO_ACKNOWLEDGE);
+        connection.createSession(true, SESSION_TRANSACTED);
         robot.join();
     }
 
     @Robotic(script = "create")
     @Test(timeout = 1000)
-    public void shouldCreateClientAcknowledgeSession() throws Exception {
+    public void shouldCreateTransactedClientAcknowledgeSession() throws Exception {
         ConnectionFactory factory = new ConnectionFactoryImpl("localhost", 5672, null, null, "clientID");
         Connection connection = factory.createConnection();
         connection.start();
-        connection.createSession(false, CLIENT_ACKNOWLEDGE);
+        connection.createSession(true, CLIENT_ACKNOWLEDGE);
         robot.join();
     }
 
     @Robotic(script = "create")
     @Test(timeout = 1000)
-    public void shouldCreateDupsOkayAcknowledgeSession() throws Exception {
+    public void shouldCreateTransactedDupsOkayAcknowledgeSession() throws Exception {
         ConnectionFactory factory = new ConnectionFactoryImpl("localhost", 5672, null, null, "clientID");
         Connection connection = factory.createConnection();
         connection.start();
-        connection.createSession(false, DUPS_OK_ACKNOWLEDGE);
+        connection.createSession(true, DUPS_OK_ACKNOWLEDGE);
         robot.join();
     }
+
 }
