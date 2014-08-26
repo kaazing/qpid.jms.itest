@@ -29,7 +29,7 @@ public class TopicConsumerIT {
         Connection connection = factory.createConnection();
         connection.start();
         Session session = connection.createSession(false, AUTO_ACKNOWLEDGE);
-        MessageConsumer consumer = session.createConsumer(session.createTopic("topic-A"));
+        MessageConsumer consumer = session.createConsumer(session.createTopic("topic://topic-A"), "NewsType = 'Sports'", true);
         consumer.close();
         session.close();
         connection.close();
@@ -43,7 +43,7 @@ public class TopicConsumerIT {
         Connection connection = factory.createConnection();
         connection.start();
         Session session = connection.createSession(false, CLIENT_ACKNOWLEDGE);
-        MessageConsumer consumer = session.createConsumer(session.createTopic("topic-A"));
+        MessageConsumer consumer = session.createConsumer(session.createTopic("topic://topic-A"), "NewsType = 'Sports'", true);
         consumer.close();
         session.close();
         connection.close();
@@ -57,7 +57,7 @@ public class TopicConsumerIT {
         Connection connection = factory.createConnection();
         connection.start();
         Session session = connection.createSession(false, DUPS_OK_ACKNOWLEDGE);
-        MessageConsumer consumer = session.createConsumer(session.createTopic("topic-A"));
+        MessageConsumer consumer = session.createConsumer(session.createTopic("topic://topic-A"), "NewsType = 'Sports'", true);
         consumer.close();
         session.close();
         connection.close();
