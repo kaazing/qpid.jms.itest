@@ -8,7 +8,26 @@
 	<packaging>jar</packaging>
 	<version>0.0.0.1-SNAPSHOT</version>
 
-	<!-- TODO <scm> </scm> -->
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <inceptionYear>2014</inceptionYear>
+
+    <scm>
+        <url>https://github.com/kaazing/qpid.jms.itest.git</url>
+        <connection>scm:git:https://github.com/kaazing/qpid.jms.itest.git</connection>
+    </scm>
+
+    <properties>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
+    </properties>
 
 	<dependencies>
 		<dependency>
@@ -40,6 +59,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -86,15 +106,15 @@
 							<logViolationsToConsole>true</logViolationsToConsole>
 							<failsOnError>true</failsOnError>
 							<failOnViolation>true</failOnViolation>
-							<configLocation>com/kaazing/build/checkstyle.xml</configLocation>
+							<configLocation>org/kaazing/code/quality/checkstyle.xml</configLocation>
 						</configuration>
 					</execution>
 				</executions>
 				<dependencies>
 					<dependency>
-						<groupId>com.kaazing</groupId>
-						<artifactId>com.kaazing.build</artifactId>
-						<version>24</version>
+						<groupId>org.kaazing</groupId>
+						<artifactId>code.quality</artifactId>
+						<version>1.0-SNAPSHOT</version>
 					</dependency>
 				</dependencies>
 			</plugin>
@@ -132,9 +152,4 @@
 		</plugins>
 	</build>
 
-	<properties>
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
-		<project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
-	</properties>
 </project>
