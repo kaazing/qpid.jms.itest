@@ -19,7 +19,7 @@ import org.kaazing.robot.junit.rules.RobotRule;
 public class TransactionIT {
 
     @Rule
-    public RobotRule robot = new RobotRule().setScriptRoot("org/kaazing/robot/scripts/amqp_1_0/jms/transaction");
+    public RobotRule robot = new RobotRule().setScriptRoot("org/kaazing/robot/scripts/amqp_1_0/jms/server/transaction");
 
     @Robotic(script = "create")
     @Test(timeout = 1000)
