@@ -30,7 +30,7 @@ import org.kaazing.robot.junit.rules.RobotRule;
 public class TopicProducerIT {
 
     @Rule
-    public RobotRule robot = new RobotRule().setScriptRoot("org/kaazing/robot/scripts/amqp_1_0/jms/server/topic/producer");
+    public RobotRule robot = new RobotRule().setScriptRoot("org/kaazing/robotic/amqp_1_0/jms/server/topic/producer");
 
     @Robotic(script = "create.then.close")
     @Test(timeout = 1000)

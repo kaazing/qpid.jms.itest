@@ -32,7 +32,7 @@ import org.kaazing.robot.junit.rules.RobotRule;
 public class QueueConsumerIT {
 
     @Rule
-    public RobotRule robot = new RobotRule().setScriptRoot("org/kaazing/robot/scripts/amqp_1_0/jms/server/queue/consumer");
+    public RobotRule robot = new RobotRule().setScriptRoot("org/kaazing/robotic/amqp_1_0/jms/server/queue/consumer");
 
     @Robotic(script = "create.then.close")
     @Test(timeout = 1000)

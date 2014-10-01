@@ -54,7 +54,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.kaazing</groupId>
-			<artifactId>robot.scripts.amqp_1_0.jms</artifactId>
+			<artifactId>robotic.amqp_1_0.jms</artifactId>
 			<version>[0.0.0.0,1.0.0.0]</version>
 			<scope>test</scope>
 		</dependency>

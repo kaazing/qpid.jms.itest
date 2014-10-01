@@ -28,7 +28,7 @@ import org.kaazing.robot.junit.rules.RobotRule;
 public class ConnectionIT {
 
     @Rule
-    public RobotRule robot = new RobotRule().setScriptRoot("org/kaazing/robot/scripts/amqp_1_0/jms/server/connection");
+    public RobotRule robot = new RobotRule().setScriptRoot("org/kaazing/robotic/amqp_1_0/jms/server/connection");
 
     @Robotic(script = "create.then.close")
     @Test(timeout = 1000)

@@ -31,7 +31,7 @@ import org.kaazing.robot.junit.rules.RobotRule;
 public class SessionIT {
 
     @Rule
-    public RobotRule robot = new RobotRule().setScriptRoot("org/kaazing/robot/scripts/amqp_1_0/jms/server/session");
+    public RobotRule robot = new RobotRule().setScriptRoot("org/kaazing/robotic/amqp_1_0/jms/server/session");
 
     @Robotic(script = "create")
     @Test(timeout = 1000)
