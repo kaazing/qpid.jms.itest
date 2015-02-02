@@ -54,7 +54,7 @@
         <dependency>
             <groupId>org.kaazing</groupId>
             <artifactId>specification.amqp_1_0.jms</artifactId>
-            <version>develop-SNAPSHOT</version>
+            <version>0.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
