@@ -15,9 +15,11 @@
  */
 package org.kaazing.qpid.amqp_1_0.jms;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static javax.jms.Session.CLIENT_ACKNOWLEDGE;
 import static javax.jms.Session.DUPS_OK_ACKNOWLEDGE;
 import static javax.jms.Session.SESSION_TRANSACTED;
+import static org.junit.rules.RuleChain.outerRule;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -25,42 +27,49 @@ import javax.jms.ConnectionFactory;
 import org.apache.qpid.amqp_1_0.jms.impl.ConnectionFactoryImpl;
 import org.junit.Rule;
 import org.junit.Test;
-import org.kaazing.robot.junit.annotation.Robotic;
-import org.kaazing.robot.junit.rules.RobotRule;
+import org.junit.rules.DisableOnDebug;
+import org.junit.rules.TestRule;
+import org.junit.rules.Timeout;
+import org.kaazing.k3po.junit.annotation.Specification;
+import org.kaazing.k3po.junit.rules.K3poRule;
 
 public class TransactionIT {
 
-    @Rule
-    public RobotRule robot = new RobotRule().setScriptRoot("org/kaazing/robotic/amqp_1_0/jms/server/transaction");
+    private final K3poRule k3po = new K3poRule().setScriptRoot("org/kaazing/specification/amqp_1_0/jms/server/transaction");
 
-    @Robotic(script = "create")
-    @Test(timeout = 1000)
+    private final TestRule timeout = new DisableOnDebug(new Timeout(5, SECONDS));
+
+    @Rule
+    public final TestRule chain = outerRule(k3po).around(timeout);
+
+    @Test
+    @Specification("create")
     public void shouldCreateTransactedAutoAcknowledgeSession() throws Exception {
         ConnectionFactory factory = new ConnectionFactoryImpl("localhost", 5672, null, null, "clientID");
         Connection connection = factory.createConnection();
         connection.start();
         connection.createSession(true, SESSION_TRANSACTED);
-        robot.join();
+        k3po.join();
     }
 
-    @Robotic(script = "create")
-    @Test(timeout = 1000)
+    @Test
+    @Specification("create")
     public void shouldCreateTransactedClientAcknowledgeSession() throws Exception {
         ConnectionFactory factory = new ConnectionFactoryImpl("localhost", 5672, null, null, "clientID");
         Connection connection = factory.createConnection();
         connection.start();
         connection.createSession(true, CLIENT_ACKNOWLEDGE);
-        robot.join();
+        k3po.join();
     }
 
-    @Robotic(script = "create")
-    @Test(timeout = 1000)
+    @Test
+    @Specification("create")
     public void shouldCreateTransactedDupsOkayAcknowledgeSession() throws Exception {
         ConnectionFactory factory = new ConnectionFactoryImpl("localhost", 5672, null, null, "clientID");
         Connection connection = factory.createConnection();
         connection.start();
         connection.createSession(true, DUPS_OK_ACKNOWLEDGE);
-        robot.join();
+        k3po.join();
     }
 
 }

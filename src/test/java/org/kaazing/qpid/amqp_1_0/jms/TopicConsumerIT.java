@@ -15,9 +15,11 @@
  */
 package org.kaazing.qpid.amqp_1_0.jms;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static javax.jms.Session.AUTO_ACKNOWLEDGE;
 import static javax.jms.Session.CLIENT_ACKNOWLEDGE;
 import static javax.jms.Session.DUPS_OK_ACKNOWLEDGE;
+import static org.junit.rules.RuleChain.outerRule;
 
 import org.apache.qpid.amqp_1_0.jms.Connection;
 import org.apache.qpid.amqp_1_0.jms.ConnectionFactory;
@@ -26,16 +28,23 @@ import org.apache.qpid.amqp_1_0.jms.Session;
 import org.apache.qpid.amqp_1_0.jms.impl.ConnectionFactoryImpl;
 import org.junit.Rule;
 import org.junit.Test;
-import org.kaazing.robot.junit.annotation.Robotic;
-import org.kaazing.robot.junit.rules.RobotRule;
+import org.junit.rules.DisableOnDebug;
+import org.junit.rules.TestRule;
+import org.junit.rules.Timeout;
+import org.kaazing.k3po.junit.annotation.Specification;
+import org.kaazing.k3po.junit.rules.K3poRule;
 
 public class TopicConsumerIT {
 
-    @Rule
-    public RobotRule robot = new RobotRule().setScriptRoot("org/kaazing/robotic/amqp_1_0/jms/server/topic/consumer");
+    private final K3poRule k3po = new K3poRule().setScriptRoot("org/kaazing/specification/amqp_1_0/jms/server/topic/consumer");
 
-    @Robotic(script = "create.then.close")
-    @Test(timeout = 1000)
+    private final TestRule timeout = new DisableOnDebug(new Timeout(5, SECONDS));
+
+    @Rule
+    public final TestRule chain = outerRule(k3po).around(timeout);
+
+    @Test
+    @Specification("create.then.close")
     public void shouldCreateNonDurableAutoAcknowledgeConsumer() throws Exception {
         ConnectionFactory factory = new ConnectionFactoryImpl("localhost", 5672, null, null, "clientID");
         Connection connection = factory.createConnection();
@@ -45,11 +54,11 @@ public class TopicConsumerIT {
         consumer.close();
         session.close();
         connection.close();
-        robot.join();
+        k3po.join();
     }
 
-    @Robotic(script = "create.then.close")
-    @Test(timeout = 1000)
+    @Test
+    @Specification("create.then.close")
     public void shouldCreateNonDurableClientAcknowledgeConsumer() throws Exception {
         ConnectionFactory factory = new ConnectionFactoryImpl("localhost", 5672, null, null, "clientID");
         Connection connection = factory.createConnection();
@@ -59,11 +68,11 @@ public class TopicConsumerIT {
         consumer.close();
         session.close();
         connection.close();
-        robot.join();
+        k3po.join();
     }
 
-    @Robotic(script = "create.then.close")
-    @Test(timeout = 1000)
+    @Test
+    @Specification("create.then.close")
     public void shouldCreateNonDurableDupsOkayAcknowledgeConsumer() throws Exception {
         ConnectionFactory factory = new ConnectionFactoryImpl("localhost", 5672, null, null, "clientID");
         Connection connection = factory.createConnection();
@@ -73,11 +82,11 @@ public class TopicConsumerIT {
         consumer.close();
         session.close();
         connection.close();
-        robot.join();
+        k3po.join();
     }
 
-    @Robotic(script = "create.durable.then.close.and.unsubscribe")
-    @Test(timeout = -1000)
+    @Test
+    @Specification("create.durable.then.close.and.unsubscribe")
     public void shouldCreateDurableAutoAcknowledgeConsumer() throws Exception {
         ConnectionFactory factory = new ConnectionFactoryImpl("localhost", 5672, null, null, "clientID");
         Connection connection = factory.createConnection();
@@ -88,11 +97,11 @@ public class TopicConsumerIT {
         session.unsubscribe("durable-X");
         session.close();
         connection.close();
-        robot.join();
+        k3po.join();
     }
 
-    @Robotic(script = "create.durable.then.close.and.unsubscribe")
-    @Test(timeout = -1000)
+    @Test
+    @Specification("create.durable.then.close.and.unsubscribe")
     public void shouldCreateDurableClientAcknowledgeConsumer() throws Exception {
         ConnectionFactory factory = new ConnectionFactoryImpl("localhost", 5672, null, null, "clientID");
         Connection connection = factory.createConnection();
@@ -103,11 +112,11 @@ public class TopicConsumerIT {
         session.unsubscribe("durable-X");
         session.close();
         connection.close();
-        robot.join();
+        k3po.join();
     }
 
-    @Robotic(script = "create.durable.then.close.and.unsubscribe")
-    @Test(timeout = -1000)
+    @Test
+    @Specification("create.durable.then.close.and.unsubscribe")
     public void shouldCreateDurableDupsOkayAcknowledgeConsumer() throws Exception {
         ConnectionFactory factory = new ConnectionFactoryImpl("localhost", 5672, null, null, "clientID");
         Connection connection = factory.createConnection();
@@ -118,7 +127,7 @@ public class TopicConsumerIT {
         session.unsubscribe("durable-X");
         session.close();
         connection.close();
-        robot.join();
+        k3po.join();
     }
 
 }
