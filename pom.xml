@@ -1,155 +1,86 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.kaazing</groupId>
-	<artifactId>qpid.jms.itest</artifactId>
-	<name>JMS AMQP Client Integration Tests</name>
-	<packaging>jar</packaging>
-	<version>0.0.0.1-SNAPSHOT</version>
+    <parent>
+        <groupId>org.kaazing</groupId>
+        <artifactId>community</artifactId>
+        <version>2.10</version>
+    </parent>
 
-    <licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-    <inceptionYear>2014</inceptionYear>
+    <artifactId>qpid.jms.itest</artifactId>
+    <version>develop-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>JMS AMQP Client Integration Tests</name>
+    <url>https://github.com/kaazing/qpid.jms.itest</url>
+    <description>JMS AMQP Client Integration Tests</description>
 
     <scm>
-        <url>https://github.com/kaazing/qpid.jms.itest.git</url>
+        <url>https://github.com/kaazing/qpid.jms.itest</url>
         <connection>scm:git:https://github.com/kaazing/qpid.jms.itest.git</connection>
     </scm>
 
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
+        <require.java.version>1.7+</require.java.version>
+        <animal.sniffer.signature.artifactId>java16</animal.sniffer.signature.artifactId>
     </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.apache.geronimo.specs</groupId>
-			<artifactId>geronimo-jms_1.1_spec</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.qpid</groupId>
-			<artifactId>qpid-amqp-1-0-client-jms</artifactId>
-			<version>0.28</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.8</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.kaazing</groupId>
-			<artifactId>robot.junit</artifactId>
-			<version>0.0.0.12</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.kaazing</groupId>
-			<artifactId>robotic.amqp_1_0.jms</artifactId>
-			<version>[0.0.0.0,1.0.0.0]</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-jms_1.1_spec</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.qpid</groupId>
+            <artifactId>qpid-amqp-1-0-client-jms</artifactId>
+            <version>0.28</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kaazing</groupId>
+            <artifactId>k3po.junit</artifactId>
+            <version>2.0.0-alpha-3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kaazing</groupId>
+            <artifactId>specification.amqp_1_0.jms</artifactId>
+            <version>develop-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.12.4</version>
-				<configuration>
-					<forkMode>always</forkMode>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>animal-sniffer-maven-plugin</artifactId>
-				<version>1.8</version>
-				<configuration>
-					<signature>
-						<groupId>org.codehaus.mojo.signature</groupId>
-						<artifactId>java16</artifactId>
-						<version>1.0</version>
-					</signature>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.9.1</version>
-				<executions>
-					<execution>
-						<id>check-style</id>
-						<goals>
-							<goal>check</goal>
-						</goals>
-						<phase>validate</phase>
-						<configuration>
-							<includeTestSourceDirectory>true</includeTestSourceDirectory>
-							<consoleOutput>true</consoleOutput>
-							<logViolationsToConsole>true</logViolationsToConsole>
-							<failsOnError>true</failsOnError>
-							<failOnViolation>true</failOnViolation>
-							<configLocation>org/kaazing/code/quality/checkstyle.xml</configLocation>
-						</configuration>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>org.kaazing</groupId>
-						<artifactId>code.quality</artifactId>
-						<version>1.0</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-			<plugin>
-				<groupId>org.kaazing</groupId>
-				<artifactId>robot-maven-plugin</artifactId>
-				<version>0.0.0.12</version>
-				<configuration>
-					<skipTests>${skipITs}</skipTests>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>start</goal>
-							<goal>stop</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.17</version>
-				<configuration>
-					<skipTests>${skipITs}</skipTests>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.kaazing</groupId>
+                <artifactId>k3po-maven-plugin</artifactId>
+                <version>2.0.0-alpha-8</version>
+                <configuration>
+                    <skipTests>${skipITs}</skipTests>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>start</goal>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
